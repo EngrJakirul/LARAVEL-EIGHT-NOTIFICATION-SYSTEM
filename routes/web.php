@@ -9,14 +9,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/send-notification', function () {
-    $user = User::find(1);
-    $user->notify(new EmailNotification());
-});
+//Route::get('/send-notification', function () {
+//    $user = User::find(1);
+//    $user->notify(new EmailNotification());
+//});
+
+//Route::get('/send-notification', function () {
+//    $user = User::find(1);
+//    Notification::send($user, new EmailNotification());
+//});
+
 
 Route::get('/send-notification', function () {
-    $user = User::find(1);
-    Notification::send($user, new EmailNotification());
+    $users = User::all();
+
+    foreach ($users as $user){
+
+        Notification::send($user, new EmailNotification());
+    }
+    return redirect()->back();
+
 });
 
 Route::middleware([
